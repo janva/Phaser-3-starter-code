@@ -1,0 +1,10 @@
+{
+  "root": true,
+  "parser": "@babel/eslint-parser",
+  "plugins": ["prettier"],
+  "extends": ["airbnb-base", "prettier"],
+  "rules": {
+    "no-console": 1, // Means warning
+    "prettier/prettier": "error"
+  }
+}
