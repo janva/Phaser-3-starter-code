@@ -73,7 +73,7 @@ module.exports = (env, argv) => ({
           context: "",
         },
         {
-          // every file inside assets folder
+          // every file inside assets-src folder
           from: "assets-src/*",
           context: "",
         },
