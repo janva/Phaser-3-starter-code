@@ -12,3 +12,7 @@
 *.vsix
 # Nodde 
 node_modules
+
+# Don't track builds  
+build/
+dist/
