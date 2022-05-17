@@ -68,12 +68,10 @@ module.exports = (env, argv) => ({
     new CopyWebpackPlugin({
       patterns: [
         {
-          // every file inside assets folder
           from: "assets/*",
           context: "",
         },
         {
-          // every file inside assets-src folder
           from: "assets-src/*",
           context: "",
         },
