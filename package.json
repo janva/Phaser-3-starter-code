@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack  serve --open  --config webpack.development.js  --mode development",
-    "build": "webpack  --config webpack.development.js --mode production",
+     "dev": "webpack  serve --open  --config webpack.config.js  --mode development",
+    "build": "webpack  --config webpack.config.js --mode production",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "babel": {
