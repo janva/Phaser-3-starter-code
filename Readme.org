@@ -124,7 +124,7 @@ An output describes where webpack will output it's resulting files and how these
   };
 #+end_src
 
-Above =__dirname= is evaluated to current directory. The main bundle will be named ='my-first-webpack.bundle.js= and all the resources are emitted to a =dist=  directory relative to directory of configuration file . 
+Above =__dirname= is evaluated to current directory. The main bundle will be named =my-first-webpack.bundle.js= and all the resources are emitted to a =dist=  directory relative to directory of configuration file . 
 *** Loaders
 Webpack only understands JSON and Javascript files as such. But webpack uses the concept of loaders as way of process other types of files so they can be converted into valid modules which can added to the dependency graph. Often times this means transpiling or compiling your code in one or another way.
 
