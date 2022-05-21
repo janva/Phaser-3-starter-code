@@ -41,19 +41,20 @@ npm init -y
 #+end_src
 
 Above just set up a directory and creates a =package.json= file which constitutes the npm project. Next lets get the required modules. Lets add a few directories and files to the project so that it matches the following structure.
-
-great-project
-|-package-json
-|-package-lock.json
-|-/dist
-    |-index.html
-|-/src
-    |-index.js
-
-And then issue the following command inside root of your project.
-
 #+begin_src shell
-npm install webpack webpack-cli --save-dev 
+  great-project
+  |-package-json
+  |-package-lock.json
+  |-/dist
+      |-index.html
+  |-/src
+      |-index.js
+#+end_src
+  
+  And then issue the following command inside root of your project.
+
+  ,#+begin_src shell
+  npm install webpack webpack-cli --save-dev 
 #+end_src
 
 This will download webpack for us.  Webpack can be run out of the box through *webpack-cli*   by using the command =npx webpack= with some options.  You can read more about the options [[https://webpack.js.org/api/cli/][here]]. Rather than using a lot of options  we are going to rely on a configuration file and  npm scripts.  Lets take look at a simple configuration file.
