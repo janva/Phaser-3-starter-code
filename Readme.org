@@ -13,7 +13,7 @@ To download all dependencies just run following inside the root of this project
 npm init
 #+end_src
 
-You spin up a development server issuing  
+You can spin up a development  server issuing  
 
 #+begin_src shell
 npm run dev
@@ -72,8 +72,7 @@ This will download webpack for us.  Webpack can be run out of the box through *w
 
 This webpack config files uses *CommonJS module* syntax  which is widely used within in nodeJS community. You can find a short introduction to them  [[https://flaviocopes.com/commonjs/][here]]. Webpack a number of module patterns so you might come across code that looks different. Documentation on supported pattern can be found [[https://webpack.js.org/concepts/modules/][here]].
 
- The above example sets an entry point =entry:'/src/index.js'=
-this is where webpack will start traversing your code building the dependency tree. Don't worry to much if you don't know anything about dependency trees it's  just a internal structure webpack uses in its quest to bundle your code. Next we create the =output= property  and setting the =filename= and =path=. The filename set the filename for the main bundle and the path into which path resources are emitted. 
+ The above example sets an entry point   =entry:'/src/index.js'= this is where webpack will start traversing your code building the dependency tree. Don't worry to much if you don't know anything about dependency trees it's  just a internal structure webpack uses in its quest to bundle your code. Next we create the =output= property  and setting the =filename= and =path=. The filename set the filename for the main bundle and the path into which path resources are emitted. 
 We add following line under script in our  =package.json= file.
  
 *package.json*
