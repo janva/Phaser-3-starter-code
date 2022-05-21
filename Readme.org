@@ -1,7 +1,6 @@
 * Starter code for phaser 3 games with vanilla JS featuring webpack.
 
-Code to help you get starting building your own [[https://phaser.io/phaser3][Phaser 3]] games using vanilla JS.
-
+Code to help you get started building your own [[https://phaser.io/phaser3][Phaser 3]] games using vanilla JS.
 ** Usage
 You need the following installed on your system to use this code
 
@@ -14,7 +13,7 @@ To download all dependencies just run following inside the root of this project
 npm init
 #+end_src
 
-You spin up a development server using 
+You spin up a development server issuing  
 
 #+begin_src shell
 npm run dev
@@ -25,3 +24,138 @@ Building you project can be done using
 #+begin_src shell
 npm run build
 #+end_src
+
+* Introduction  to webpack 
+I have previously used gulp, bower and yeoman for my projects but haven't been using webpack. So I'm going to try to scribble down a few notes on the subject here as well. 
+
+** What is webpack
+According to webpack pages it's a static module bundler for modern Javascript applications. In short what it does is creating an dependency graph from one or more entries, combines every module your project needs into one or more bundles which are static assets to serve your content. 
+
+** Getting up and running.
+You can get webpack through npm. You will need both the =webpack= module and the =webpack-cli= module as an dev-dependency in your project. We start by creating an npm project.
+
+#+begin_src shell
+mkdir great-project
+cd great-project
+npm init -y
+#+end_src
+
+Above just set up a directory and creates a =package.json= file which constitutes the npm project. Next lets get the required modules. Lets add a few directories and files to the project so that it matches the following structure.
+
+great-project
+|-package-json
+|-package-lock.json
+|-/dist
+    |-index.html
+|-/src
+    |-index.js
+
+And then issue the following command inside root of your project.
+
+#+begin_src shell
+npm install webpack webpack-cli --save-dev 
+#+end_src
+
+This will download webpack for us.  Webpack can be run out of the box through *webpack-cli*   by using the command =npx webpack= with some options.  You can read more about the options [[https://webpack.js.org/api/cli/][here]]. Rather than using a lot of options  we are going to rely on a configuration file and  npm scripts.  Lets take look at a simple configuration file.
+
+*webpack.config.js*
+#+begin_src javascript
+  const path =require ('path')
+  module.exports ={
+      entry:'/src/index.js',
+      output:{
+          filename: 'bundle.js'
+          path: path.resolve(__dirname, 'dist')
+      }
+  }
+#+end_src
+
+This webpack config files uses *CommonJS module* syntax  which is widely used within in nodeJS community. You can find a short introduction to them  [[https://flaviocopes.com/commonjs/][here]]. Webpack a number of module patterns so you might come across code that looks different. Documentation on supported pattern can be found [[https://webpack.js.org/concepts/modules/][here]].
+
+ The above example sets an entry point =entry:'/src/index.js'=
+this is where webpack will start traversing your code building the dependency tree. Don't worry to much if you don't know anything about dependency trees it's  just a internal structure webpack uses in its quest to bundle your code. Next we create the =output= property  and setting the =filename= and =path=. The filename set the filename for the main bundle and the path into which path resources are emitted. 
+We add following line under script in our  =package.json= file.
+ 
+*package.json*
+#+begin_src javascript
+"scripts": {
+    "build": "webpack  --config webpack.config.js",
+  }
+#+end_src
+
+By default webpack will pick up configuration file if it's named =webpack.config.js= but if you are so inclined you can name it whatever you want and use =--config= flag to pass the file to webpack bundler. Hence above ="build":"webpack"= would have the same effect. Anyways now we are ready to build our project with the command
+
+#+begin_src shell
+npm run build
+#+end_src
+
+A couple things might have caught your eye. First we created a dist folder. This is not strictly necessary as webpack would had created the folder for us. Second it might seem strange that we put =index.html= inside =/dist= folder. That is true normally that would not be the case. Webpack bundler in it core only handle =.js= files and =.json= files. There is a way round this using loaders. But for this short example we choose to just put the =index.html= inside the dist folder.
+
+** Core  concepts
+Now that we worked through an example lets get an overview of the core concepts
+
+*** Entry
+An entry is a point from which webpack starts building out an internal dependency graph.  If no entry is mentioned  then it defaults to =./src/index.js=. You can have one or more entry points and these can be configured in your configuration file like so. 
+
+*webpack.config.js*
+#+begin_src javascript
+entry :'./path/to/entry/file.js'
+#+end_src
+
+If you want several entry points you can use object notation
+#+begin_src javascript
+ entry: {
+    home: './home.js',
+    about: './about.js',
+    contact: './contact.js',
+  },
+#+end_src
+
+*** Output
+An output describes where webpack will output it's resulting files and how these files should be named. In webpack lingo we use the term to *emit*  as in bundles are emitted to...  If no output property has been set then by default the main output file is  emitted to  =./dist/main.js= using  =./ dist= as default for all other generated files.
+#+begin_src javascript
+  const path = require ('path');
+  module.exports = {
+    entry: './path/to/my/entry/file.js',
+    output: {
+      path: path.resolve(__dirname, 'dist'),
+      filename: 'my-first-webpack.bundle.js',
+    },
+  };
+#+end_src
+
+Above =__dirname= is evaluated to current directory. The main bundle will be named ='my-first-webpack.bundle.js= and all the resources are emitted to a =dist=  directory relative to directory of configuration file . 
+*** Loaders
+Webpack only understands JSON and Javascript files as such. But webpack uses the concept of loaders as way of process other types of files so they can be converted into valid modules which can added to the dependency graph. Often times this means transpiling or compiling your code in one or another way.
+
+#+begin_src javascript
+  const path = require('path');
+
+    module.exports = {
+        output: {
+            filename: 'my-first-webpack.bundle.js',
+        },
+        module: {
+            rules: [{ test: /\.txt$/, use: 'raw-loader' }],
+        },
+    };
+#+end_src
+
+loaders can be defined under modules property as rules. Rules consist of two parts =test:=
+which defines what input we want to use to loader and a =use:= part which defines what loader to use. The input most often is defined as regular expression targeting some file extension. So above all files that are =imported/required= with extension of =.txt= will use raw-loader to transform it before adding to bundle.
+*** Plugins
+In addition to loaders  webpack has support for plugins can hook into different stages of compilation process?  these span a wide range functions from optimization to injection of environment variables.   Plugins are modules that need to be required. They can be used several times in same configuration. Each time we want to use it we need to instantiate the plugin.
+
+#+begin_src javascript
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+  const webpack = require('webpack'); //to access built-in plugins
+
+  module.exports = {
+      module: {
+      rules: [{ test: /\.txt$/, use: 'raw-loader' }],
+    },
+    plugins: [new HtmlWebpackPlugin({ template: './src/index.html' })],
+  };
+
+#+end_src
+ Above =html-webpack-plugin= generates HTML file for applications and injects all your generated bundles into this file.
