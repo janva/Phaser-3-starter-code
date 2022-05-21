@@ -53,7 +53,7 @@ Above just set up a directory and creates a =package.json= file which constitute
   
   And then issue the following command inside root of your project.
 
-  ,#+begin_src shell
+  #+begin_src shell
   npm install webpack webpack-cli --save-dev 
 #+end_src
 
