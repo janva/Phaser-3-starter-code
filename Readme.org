@@ -26,7 +26,7 @@ npm run build
 #+end_src
 
 * Introduction  to webpack 
-I have previously used gulp, bower and yeoman for my projects but haven't been using webpack. So I'm going to try to scribble down a few notes on the subject here as well. 
+I have previously used gulp, bower and yeoman for my projects but haven't been using webpack. So I'm going to try to scribble down a few notes on the subject. 
 
 ** What is webpack
 According to webpack pages it's a static module bundler for modern Javascript applications. In short what it does is creating an dependency graph from one or more entries, combines every module your project needs into one or more bundles which are static assets to serve your content. 
@@ -57,7 +57,7 @@ Above just set up a directory and creates a =package.json= file which constitute
   npm install webpack webpack-cli --save-dev 
 #+end_src
 
-This will download webpack for us.  Webpack can be run out of the box through *webpack-cli*   by using the command =npx webpack= with some options.  You can read more about the options [[https://webpack.js.org/api/cli/][here]]. Rather than using a lot of options  we are going to rely on a configuration file and  npm scripts.  Lets take look at a simple configuration file.
+This will download webpack for us.  Webpack can be run out of the box through *webpack-cli*  using the command =npx webpack= with some options.  You can read more about the options [[https://webpack.js.org/api/cli/][here]]. Rather than using a lot of options  we are going to rely on a configuration file and  npm scripts.  Lets take look at a simple configuration file.
 
 *webpack.config.js*
 #+begin_src javascript
@@ -71,9 +71,9 @@ This will download webpack for us.  Webpack can be run out of the box through *w
   }
 #+end_src
 
-This webpack config files uses *CommonJS module* syntax  which is widely used within in nodeJS community. You can find a short introduction to them  [[https://flaviocopes.com/commonjs/][here]]. Webpack a number of module patterns so you might come across code that looks different. Documentation on supported pattern can be found [[https://webpack.js.org/concepts/modules/][here]].
+This webpack config file uses *CommonJS module* syntax  which is widely used within in nodeJS community. You can find a short introduction to CommonJS modules  [[https://flaviocopes.com/commonjs/][here]]. Webpack supports a number of module patterns so you might come across code that looks different. Documentation on supported pattern can be found [[https://webpack.js.org/concepts/modules/][here]].
 
- The above example sets an entry point to =src/index.js= this is where webpack will start traversing your code building the dependency tree. Don't worry to much if you don't know anything about dependency trees it's  just a internal structure webpack uses in its quest to bundle your code. Next we create the =output= property  and setting the =filename= and =path=. The filename set the filename for the main bundle and the path into which path resources are emitted. 
+ The above example sets an entry point to =src/index.js= this is where webpack will start traversing your code building the dependency tree. Don't worry to much if you don't know anything about dependency trees it's  just a internal structure webpack uses in its quest to bundle your code. Next we line adds  the =output= property within it we set the =filename= and =path=. The filename sets the filename for the main bundle and the path into which path resources are emitted. 
 We add following line under script in our  =package.json= file.
  
 *package.json*
